@@ -16,6 +16,7 @@ vector <vector<int>> adj;
 vi visited;
 vi topsort;
 
+
 void dfs(int u) {
 	visited[u] = 1;
 	for (int j = 0; j < (int)adj[u].size(); j++) {
