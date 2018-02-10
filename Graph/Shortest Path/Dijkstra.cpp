@@ -21,11 +21,9 @@ void dijkstra(int s) {
     priority_queue < ii, vector < ii > , greater < ii > > pq;
     pq.push(ii(0, s));
     while (!pq.empty()) {
-      ii front = pq.top();
-      pq.pop();
+      ii front = pq.top(); pq.pop();
       int d = front.first, u = front.second;
-      if (d > dist[u])
-		  continue;
+      if (d > dist[u])  continue;
       for (auto v: adj[u]) {
         if (dist[u] + v.second < dist[v.first]) {
           dist[v.first] = dist[u] + v.second;
