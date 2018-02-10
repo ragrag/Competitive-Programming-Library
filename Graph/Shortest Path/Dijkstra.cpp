@@ -16,12 +16,10 @@ typedef pair<int,int> ii;
 vector <int> dist;
 vector <vector<ii>> adj;
 
-//BFS BASE
-void dijkstra(int s) {
 
+void dijkstra(int s) {
 dist[s]=0;
 priority_queue< ii, vector<ii>, greater<ii> > pq; pq.push(ii(0, s));
-
 while (!pq.empty()) {
 	ii front = pq.top(); pq.pop();  
 	int d = front.first, u = front.second;
@@ -35,7 +33,6 @@ while (!pq.empty()) {
    }
   } 
  }  
-
 
 
 int main()
