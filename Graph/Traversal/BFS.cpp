@@ -41,39 +41,6 @@ while (!q.empty()) {
 }
 
 
-
-//BFS Shortest Path
-vi p; 
-
-void printPath(int u) { 
-if (u == s) { cout<<s; return; } 
-printPath(p[u]); 
-cout<<" "<<u; }
-
-void bfs(int s) {
-
-queue<int> q;
-dist[s]=0;
-q.push(s);
-
-while (!q.empty()) {
-	
-	int u = q.front();
-	q.pop();
-
-	for (int j = 0; j < (int)adj[u].size(); j++){
-		int v = adj[u][j];
-	if (dist[v] == INF){
-		dist[v] = dist[u] + 1;
-		p[v] = u;
-		q.push(v);
-		
-	}
-	}
-}
-}
-
-
 //BFS Barpitite Graph Check
 bool isBipartite = true;
 
@@ -139,7 +106,6 @@ int n,e;
 cin>>n>>e;
 
 adj = vector < vector<int> > (n+1);
-p = vector < vector<int> > (n+1);
 dist = vi(n, INF);
 
     for (int i = 0;i < e;i++)
@@ -159,7 +125,6 @@ toposortBFS(n);
 vprint(ts);   
 
 
-printPath(t),
 
 		return 0;
 }
