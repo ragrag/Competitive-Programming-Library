@@ -12,8 +12,10 @@ typedef long long ll;
 typedef vector <int> vi;
 
 vector <vector<int>> adj;
-
 vi visited;
+
+
+//DFS With Topological Sorting
 vi topsort;
 
 
@@ -32,8 +34,8 @@ topsort.push_back(u);
 
 
 
+//DFS Graph Property Check
 vi dfs_parent;
-vi visited;
 int cyc;
 int twoway;
 int forwardedge;
