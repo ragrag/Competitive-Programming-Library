@@ -16,6 +16,13 @@ typedef pair<int,int> ii;
 vector <int> dist;
 vector <vector<ii>> adj;
 
+vi p;
+
+void printPath(int u, int s) {
+if (u == s) { cout<<s; return; }
+printPath(p[u],s);
+cout<<" "<<u; }
+
 void dijkstra(int s) {
     dist[s] = 0;
     priority_queue < ii, vector < ii > , greater < ii > > pq;
@@ -27,11 +34,12 @@ void dijkstra(int s) {
       for (auto v: adj[u]) {
         if (dist[u] + v.second < dist[v.first]) {
           dist[v.first] = dist[u] + v.second;
+		  p[v.first] = u;
           pq.push(ii(dist[v.first], v.first));
         }
       }
     }
-	
+}
 int main()
 {
 int n,e;
@@ -39,18 +47,22 @@ cin>>n>>e;
 
 adj = vector < vector<ii> > (n+1);
 dist = vi(n+1, INF);
-
+p = vector<int>(n+1);
     for (int i = 0;i < e;i++)
 	{
 		int from, to,w;
 		cin >> from >> to>>w;
 	    adj[from].push_back(mp(to,w));
+	  //  adj[to].push_back(mp(from,w));
 	}
 
-	   dijkstra(1);
-	   
-  for (int i = 0; i < n; i++) // index + 1 for final answer
-    printf("SSSP(%d, %d) = %d\n", s, i, dist[i]);
+int source,dest;
+cin>>source>>dest;
+
+dijkstra(source);
+
+cout<<dist[dest]<<endl;
+printPath(dest, source);
 
 		return 0;
 }

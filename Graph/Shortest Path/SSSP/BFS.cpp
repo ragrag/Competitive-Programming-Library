@@ -25,16 +25,12 @@ printPath(p[u],s);
 cout<<" "<<u; }
 
 void bfs(int s) {
-
 queue<int> q;
 dist[s]=0;
 q.push(s);
-
 while (!q.empty()) {
-
 	int u = q.front();
 	q.pop();
-
 	for (int j = 0; j < (int)adj[u].size(); j++){
 		int v = adj[u][j];
 	if (dist[v] == INF){
@@ -61,11 +57,13 @@ dist = vi(n, INF);
 		int from, to;
 		cin >> from >> to;
 		adj[from].push_back(to);
-
+	//	adj[to].push_back(from);
 	}
 
-	   bfs(2);
-	printPath(4, 2);
+	int source,dest;
+	cin>>source>>dest;
+	   bfs(source);
+	printPath(dest, source);
 
 		return 0;
 }
