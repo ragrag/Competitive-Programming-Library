@@ -44,7 +44,7 @@ dist = vi(n+1, INF);
 	{
 		int from, to,w;
 		cin >> from >> to>>w;
-		adj[from].push_back(mp(to,w));
+	    adj[from].push_back(mp(to,w));
         adj[to].push_back(mp(from,w));
 	}
 
