@@ -18,7 +18,7 @@ vector <vector<int>> adj;
 
 
 
-
+//BFS BASE
 void bfs(int s) {
 
 queue<int> q;
@@ -42,10 +42,8 @@ while (!q.empty()) {
 
 
 
-
+//BFS Shortest Path
 vi p; 
-
-
 
 void printPath(int u) { 
 if (u == s) { cout<<s; return; } 
@@ -76,7 +74,7 @@ while (!q.empty()) {
 }
 
 
-
+//BFS Barpitite Graph Check
 bool isBipartite = true;
 
 void checkBPD(int s) {
@@ -105,7 +103,7 @@ while (!q.empty()) {
 }
 }
 
-
+//BFS Topological Sorting
 vi p;
 vi ts;
 
