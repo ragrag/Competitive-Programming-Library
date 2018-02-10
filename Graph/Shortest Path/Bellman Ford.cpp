@@ -18,7 +18,6 @@ vector <vector<ii>> adj;
 int n;
 
 void bellman(int s) {
-
 dist[s]=0;
   for (int i = 0; i < n - 1; i++)
     for (int u = 0; u < n; u++)
@@ -26,7 +25,6 @@ dist[s]=0;
         dist[v.first] = min(dist[v.first], dist[u] + v.second);
       }
 }
-
 
 
  bool hasNegativeCycle()
