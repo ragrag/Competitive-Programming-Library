@@ -16,25 +16,24 @@ typedef pair<int,int> ii;
 vector <int> dist;
 vector <vector<ii>> adj;
 
-
 void dijkstra(int s) {
-dist[s]=0;
-priority_queue< ii, vector<ii>, greater<ii> > pq; pq.push(ii(0, s));
-while (!pq.empty()) {
-	ii front = pq.top(); pq.pop();  
-	int d = front.first, u = front.second;
-	if (d > dist[u]) continue;
-
-	for (auto v : adj[u]){
+    dist[s] = 0;
+    priority_queue < ii, vector < ii > , greater < ii > > pq;
+    pq.push(ii(0, s));
+    while (!pq.empty()) {
+      ii front = pq.top();
+      pq.pop();
+      int d = front.first, u = front.second;
+      if (d > dist[u])
+		  continue;
+      for (auto v: adj[u]) {
+        if (dist[u] + v.second < dist[v.first]) {
+          dist[v.first] = dist[u] + v.second;
+          pq.push(ii(dist[v.first], v.first));
+        }
+      }
+    }
 	
-	if (dist[u] + v.second < dist[v.first]) {
-        dist[v.first] = dist[u] + v.second;                 
-        pq.push(ii(dist[v.first], v.first));
-   }
-  } 
- }  
-
-
 int main()
 {
 int n,e;
@@ -51,9 +50,7 @@ dist = vi(n+1, INF);
         adj[to].push_back(mp(from,w));
 	}
 
-
 	   dijkstra(1);
-
 	   
   for (int i = 0; i < n; i++) // index + 1 for final answer
     printf("SSSP(%d, %d) = %d\n", s, i, dist[i]);
