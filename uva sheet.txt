@@ -1,7 +1,7 @@
 
 
 Bridges, Articulation
-UVA 10199
+UVA 10199 //Solved
 UVA 00796
 
 SCC 

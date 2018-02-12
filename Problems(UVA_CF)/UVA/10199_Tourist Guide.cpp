@@ -13,33 +13,32 @@ typedef vector <int> vi;
 
 
 vector <vector<int>> adj;
+set <string> cams;
 
-
-vi visited; 
+vi visited;
 vi dfs_parent; // (V,0)
-vi dfs_num;   
-vi dfs_low;  
+vi dfs_num;
+vi dfs_low;
 vi articulation_vertex;
 int dfsNumberCounter, dfsRoot, rootChildren; //0,i,0
 
 void articulationPointAndBridge(int u) {
-  dfs_low[u] = dfs_num[u] = dfsNumberCounter++;     
-  visited[u]=1; 
+  dfs_low[u] = dfs_num[u] = dfsNumberCounter++;
+  visited[u]=1;
   for (auto v:adj[u]) {
-    if (visited[v] == 0) {                          
+    if (visited[v] == 0) {
       dfs_parent[v] = u;
-      if (u == dfsRoot) rootChildren++;  
+      if (u == dfsRoot) rootChildren++;
 
       articulationPointAndBridge(v);
 
-      if (dfs_low[v] >= dfs_num[u])             
-        articulation_vertex[u] = true;           
-      if (dfs_low[v] > dfs_num[u])                   
-        printf(" Edge (%d, %d) is a bridge\n", u, v);
-      dfs_low[u] = min(dfs_low[u], dfs_low[v]);      
+      if (dfs_low[v] >= dfs_num[u])
+       articulation_vertex[u] =1;
+
+      dfs_low[u] = min(dfs_low[u], dfs_low[v]);
     }
-    else if (v != dfs_parent[u])    
-      dfs_low[u] = min(dfs_low[u], dfs_num[v]);       
+    else if (v != dfs_parent[u])
+      dfs_low[u] = min(dfs_low[u], dfs_num[v]);
 } }
 
 
@@ -47,25 +46,25 @@ void articulationPointAndBridge(int u) {
 
 int main()
 {
-	
+int casee=0;
 	while(1)
 	{
 int n,e;
 cin>>n;
 if(n==0)
 	break;
-cin>>e;
+
 map <string,int > city;
 map <int,string> citystr;
-adj = vector < vector<int> > (n+1);
 
-dfs_num = vi(n+1);
-dfs_low.assign(n+1,0); 
+adj = vector < vector<int> > (n);
+cams.clear();
+dfs_num = vi(n);
+dfs_low.assign(n,0);
 dfsNumberCounter=0;
-articulation_vertex.assign(n+1,0); //articulation
-dfs_parent = vi (n+1);
-visited.assign(n+1,0); //SCC
-
+articulation_vertex.assign(n,0); //articulation
+dfs_parent = vi (n);
+visited.assign(n,0); //SCC
 
 rep (i,n)
 {
@@ -73,30 +72,40 @@ rep (i,n)
 	cin>>t;
 	city[t] = i;
 	citystr[i] = t;
-	
+
 }
+cin>>e;
     for (int i = 0;i < e;i++)
 	{
 		string from,to;
 		cin >> from >>to;
-		adj[map[from]].push_back(map[to]);
-        adj[map[to]].push_back(map[from]);
-		
-	}
-	 
-	
-	for (int i = 0; i <= n; i++)
-		if (visited[i] == 0) {
-		dfsRoot = i; rootChildren = 0; 
-		articulationPointAndBridge(i);
-		articulation_vertex[dfsRoot] = (rootChildren > 1); 
-		} 
-		
-	for (int i = 0; i <= n; i++)
-		if (articulation_vertex[i])
-		 printf(" Vertex %d\n", i);
+
+		adj[city[from]].push_back(city[to]);
+        adj[city[to]].push_back(city[from]);
 
 	}
-		
+
+
+	for (int i = 0; i < n; i++)
+		if (visited[i] == 0) {
+		dfsRoot = i; rootChildren = 0;
+		articulationPointAndBridge(i);
+		articulation_vertex[dfsRoot] = (rootChildren > 1);
+		}
+
+
+
+rep (i,n)
+{
+    if(articulation_vertex[i]==1)
+        cams.insert(citystr[i]);
+}
+cout<<"City map #"<<++casee<<": "<<cams.size()<<" camera(s) found"<<endl;
+	for (auto f:cams)
+    {
+        cout<<f<<endl;
+    }
+	}
 		return 0;
+
 }
