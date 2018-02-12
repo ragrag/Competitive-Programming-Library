@@ -15,90 +15,98 @@ typedef vector <int> vi;
 
 vector <vector<int>> adj;
 
-vi visited; 
+vi visited;
 vi dfs_num;     // (V,0)
-vi dfs_low;  
-vi S;         
-vi findSCC;                          
+vi dfs_low;
+vi S;
+vi flags;
 int numSCC;
 int dfsNumberCounter;
 
 void tarjanSCC(int u) {
-  dfs_low[u] = dfs_num[u] = ++dfsNumberCounter;      
-  S.push_back(u);           
+  dfs_low[u] = dfs_num[u] = ++dfsNumberCounter;
+  S.push_back(u);
   visited[u] = 1;
   for (auto v:adj[u]) {
     if (dfs_num[v] == 0)
       tarjanSCC(v);
-    if (visited[v])                                
+    if (visited[v])
       dfs_low[u] = min(dfs_low[u], dfs_low[v]);
   }
 
-  if (dfs_low[u] == dfs_num[u]) {        
-    printf("SCC %d:", ++numSCC);           
+  if (dfs_low[u] == dfs_num[u]) {
+
     while (1) {
       int v = S.back(); S.pop_back(); visited[v] = 0;
-      printf(" %d", v);
-	  findSCC[v] = numSCC;
+      flags[v] = numSCC;
       if (u == v) break;
     }
-    printf("\n");
+numSCC++;
 } }
 
 int main()
 {
+
+    int t,tt;
+    cin>>t;
+
+for(int casee=1;casee<=t;casee++)
+    {
+
+
 int n,e;
 cin>>n>>e;
 
-adj = vector < vector<int> > (n+1);
-
+adj = vector < vector<int> > (n);
+flags = vector <int>(n);
 dfsNumberCounter=0;
-numSCC=0;
-dfs_num = vi(n+1);
-dfs_low.assign(n+1,0); 
-visited.assign(n+1,0); //SCC
+dfs_num = vi(n);
+dfs_low.assign(n,0);
 S.clear();
-
-
-findSCC = vi(n);
+visited.assign(n,0); //SCC
+numSCC=0;
 
     for (int i = 0;i < e;i++)
 	{
 		int from,to;
 		cin >> from >>to;
+		from--;to--;
 		adj[from].push_back(to);
-     //   adj[to].push_back(from);
-		
+   //     adj[from].push_back(to);
+
 	}
 
-	 
-	 for (int i = 0; i <= n; i++)
+
+	 for (int i = 0; i < n; i++)
 		if (dfs_num[i] == 0)
-		tarjanSCC(i);
-	
-	cout<<numSCC;
-		
-		//Counting disconnected SCCs
-		
+            tarjanSCC(i);
+
+		int cc=0;
 		vector <bool> root(numSCC,true);
         rep(i,n)
         {
+
             for (auto f:adj[i])
             {
-                if (findSCC[i] != findSCC[f])
+
+                if (flags[i] != flags[f])
                 {
-                    root[findSCC[f]]= false;
+                    root[flags[f]]= false;
                 }
             }
         }
-	int cc=0;
-rep2(i,numSCC)
+
+
+rep(i,numSCC)
 {
     if (root[i])
     {
         cc++;
     }
+
 }
-		cout<<cc<<endl;
+	cout<<"Case "<<casee<<": "<<cc<<endl;
+
+    }
 		return 0;
 }
