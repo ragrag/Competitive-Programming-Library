@@ -47,16 +47,9 @@ void articulationPointAndBridge(int u) {
 
 int main()
 {
-	
-	while(1)
-	{
 int n,e;
-cin>>n;
-if(n==0)
-	break;
-cin>>e;
-map <string,int > city;
-map <int,string> citystr;
+cin>>n>>e;
+
 adj = vector < vector<int> > (n+1);
 
 dfs_num = vi(n+1);
@@ -66,21 +59,12 @@ articulation_vertex.assign(n+1,0); //articulation
 dfs_parent = vi (n+1);
 visited.assign(n+1,0); //SCC
 
-
-rep (i,n)
-{
-	string t;
-	cin>>t;
-	city[t] = i;
-	citystr[i] = t;
-	
-}
     for (int i = 0;i < e;i++)
 	{
-		string from,to;
+		int from,to;
 		cin >> from >>to;
-		adj[map[from]].push_back(map[to]);
-        adj[map[to]].push_back(map[from]);
+		adj[to].push_back(from);
+        adj[from].push_back(to);
 		
 	}
 	 
@@ -96,7 +80,7 @@ rep (i,n)
 		if (articulation_vertex[i])
 		 printf(" Vertex %d\n", i);
 
-	}
+	
 		
 		return 0;
 }
