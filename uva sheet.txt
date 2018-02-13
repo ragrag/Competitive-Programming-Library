@@ -6,9 +6,9 @@ UVA 00796 //Solved
 
 SCC 
 UVa 00247 //Solved
-UVa 11504  //Solved using Topological sorting 
-UVa 11770 
-UVA 11709
+UVa 11504  //Solved using Topological sorting  and SCC
+UVa 11770  //Solved
+UVA 11709  //Solved
 
 MST
 UVa 11631
