@@ -13,82 +13,67 @@ typedef long long ll;
 typedef vector < int > vi;
 typedef pair < int, int > ii;
 
+int N;
+vi pset(200005);
+void initSet(int n)
+{
+    pset.assign(n, 0); for (int i = 0; i < n; i++) pset[i] = i;
+}
+int findSet(int i)
+{
+    return (pset[i] == i) ? i : (pset[i] = findSet(pset[i]));
+}
+bool isSameSet(int i, int j) { return findSet(i) == findSet(j); }
+void unionSet(int i, int j) { pset[findSet(i)] = findSet(j); }
 vector < vector < ii > > adj;
-vi taken;
-priority_queue < ii > pq;
-
-vi visited;
-
-void dfs(int u) {
-	visited[u] = 1;
-	for (int j = 0; j < (int)adj[u].size(); j++) {
-
-		int v = adj[u][j].first;
-		if (visited[v] == 0)
-    {
-			dfs(v);
-	}
-}
-
-
-}
-
-void process(int vtx) {
-   taken[vtx] = 1;
-   for (int j = 0; j < (int) adj[vtx].size(); j++) {
-      ii v = adj[vtx][j];
-      if (!taken[v.first]) pq.push(ii(-v.second, -v.first));
-   }
-}
 
 int main() {
+
     int t;
     cin>>t;
-    int p=t;
-    while(t--)
+    for(int o=1;o<=t;o++)
     {
 
 
-   int n, e,a;
-   cin >> n >> e>>a;
+   int e,a;
+   cin >> N >> e>>a;
 
-   adj.assign(n+1, vector < ii > ());
-   taken.assign(n+1, 0);
-    visited = vi(n+1);
+   adj.assign(N+1, vector < ii > ());
+   vector < pair < int, ii > > EdgeList;
    for (int i = 0; i < e; i++) {
       int from, to, w;
       cin >> from >> to >> w;
-      adj[from].pb(mp(to, w));
-      adj[to].pb(mp(from, w));
+      EdgeList.pb(mp(w, ii(from-1, to-1)));
+      adj[from].pb(mp(to-1, w));
+      adj[to].pb(mp(from-1, w));
    }
 
-   int numcc =0;
-   int tc=0;
-   rep2(i,n)
-   {
-   if(!visited[i])
-    {
-
-
-   dfs(i);
-   process(i);
+   sort(EdgeList.begin(), EdgeList.end());
    int mst_cost = 0;
-   while (!pq.empty()) {
-      ii front = pq.top();
-      pq.pop();
-      int u = -front.second, w = -front.first;
-      if (!taken[u])
-         mst_cost += w, process(u);
-   }
-    tc+=mst_cost;
-    numcc++;
-   }
-
-   }
-cout << "Case #"<<p-t<<": "<<tc+(numcc*a) <<" "<<numcc<< endl;
-}
+  initSet(N);
+   for (int i = 0; i < e; i++) {
+      pair < int, ii > front = EdgeList[i];
 
 
+        if (front.first >= a )
+        {
+            break;
+        }
+      if (!isSameSet(front.second.first, front.second.second)) {
+         mst_cost += front.first;
+
+         unionSet(front.second.first, front.second.second);
+      }
+
+   }
+
+int   airPorts = 0;
+        for(int i = 0 ; i < N ; i++)
+            if(pset[i] == i){
+                mst_cost += a;
+                airPorts ++;
+            }
+   cout <<"Case #"<<o<<": "<< mst_cost <<" "<<airPorts<<endl;
+    }
    return 0;
 }
-

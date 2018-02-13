@@ -63,8 +63,8 @@ visited.assign(n+1,0); //SCC
 	{
 		int from,to;
 		cin >> from >>to;
-		adj[to].push_back(from);
-        adj[from].push_back(to);
+		adj[from].push_back(to);
+        adj[to].push_back(from);
 		
 	}
 	 

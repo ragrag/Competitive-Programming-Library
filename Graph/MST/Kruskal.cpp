@@ -13,74 +13,51 @@ typedef long long ll;
 typedef vector < int > vi;
 typedef pair < int, int > ii;
 
-class UnionFind { 
-   private:
-      vi p, rank, setSize; 
-   int numSets;
-   public:
-      UnionFind(int N) {
-         setSize.assign(N, 1);
-         numSets = N;
-         rank.assign(N, 0);
-         p.assign(N, 0);
-         for (int i = 0; i < N; i++) p[i] = i;
-      }
-   int findSet(int i) {
-      return (p[i] == i) ? i : (p[i] = findSet(p[i]));
-   }
-   bool isSameSet(int i, int j) {
-      return findSet(i) == findSet(j);
-   }
-   void unionSet(int i, int j) {
-      if (!isSameSet(i, j)) {
-         numSets--;
-         int x = findSet(i), y = findSet(j);
-   
-         if (rank[x] > rank[y]) {
-            p[y] = x;
-            setSize[x] += setSize[y];
-         } else {
-            p[x] = y;
-            setSize[y] += setSize[x];
-            if (rank[x] == rank[y]) rank[y]++;
-         }
-      }
-   }
-   int numDisjointSets() {
-      return numSets;
-   }
-   int sizeOfSet(int i) {
-      return setSize[findSet(i)];
-   }
-};
-
 vector < vector < ii > > adj;
 
+vi pset(200005);
+void initSet(int n) {
+  pset.assign(n, 0);
+  for (int i = 0; i < n; i++) pset[i] = i;
+}
+int findSet(int i) {
+  return (pset[i] == i) ? i : (pset[i] = findSet(pset[i]));
+}
+bool isSameSet(int i, int j) {
+  return findSet(i) == findSet(j);
+}
+void unionSet(int i, int j) {
+  pset[findSet(i)] = findSet(j);
+}
+
 int main() {
-   int n, e;
-   cin >> n >> e;
 
-   adj.assign(n, vector < ii > ());
-   vector < pair < int, ii > > EdgeList;
-   for (int i = 0; i < e; i++) {
-      int from, to, w;
-      cin >> from >> to >> w;
-      EdgeList.pb(mp(w, ii(from, to)));
-      adj[from].pb(mp(to, w));
-      adj[to].pb(mp(from, w));
-   }
-   sort(EdgeList.begin(), EdgeList.end());
-   int mst_cost = 0;
-   UnionFind UF(n);
-   for (int i = 0; i < e; i++) {
-      pair < int, ii > front = EdgeList[i];
+  int n, e;
+  cin >> n >> e;
 
-      if (!UF.isSameSet(front.second.first, front.second.second)) {
-         mst_cost += front.first;
-         UF.unionSet(front.second.first, front.second.second);
-      }
-   }
-   cout << mst_cost << endl;
+  adj.assign(n, vector < ii > ());
+  vector < pair < int, ii > > EdgeList;
+  for (int i = 0; i < e; i++) {
+    int from, to, w;
+    cin >> from >> to >> w;
+    EdgeList.pb(mp(w, ii(from, to)));
+    adj[from].pb(mp(to, w));
+    adj[to].pb(mp(from, w));
+  }
 
-   return 0;
+  sort(EdgeList.begin(), EdgeList.end());
+  int mst_cost = 0;
+  initSet(n);
+  for (int i = 0; i < e; i++) {
+    pair < int, ii > front = EdgeList[i];
+    if (!isSameSet(front.second.first, front.second.second)) {
+      mst_cost += front.first;
+      unionSet(front.second.first, front.second.second);
+    }
+
+  }
+
+  cout << mst_cost << endl;
+
+  return 0;
 }
