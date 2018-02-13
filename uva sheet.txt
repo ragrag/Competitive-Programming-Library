@@ -11,11 +11,14 @@ UVa 11770  //Solved
 UVA 11709  //Solved
 
 MST
-UVa 11631
+UVa 11631 // Solved
 UVA 11733 //Solved
 UVA 1235
-UVA 10099
-UVA 1234]
+
+UVA 10048 minimax
+UVA 10099 maximin
+
+UVA 1234 //Solved MAXST
 
 Shortest Paths
 UVA 10986
