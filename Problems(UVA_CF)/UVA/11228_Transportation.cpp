@@ -15,26 +15,6 @@ typedef pair < int, int > ii;
 
 vector < vector < ii > > adj;
 
-
-int maxx;			//minimax
-vi visited;
-bool dfs(int u, int to) {
-    if(u==to)
-        return true;
-
-	visited[u] = 1;
-	bool found = false;
-	for (auto v: adj[u]) {
-		if (visited[v.first] == 0 && dfs(v.first,to))
-    {
-                 maxx = max(maxx,v.second);
-                 return true;
-	}
-}
-return false;
-}
-
-
 vi pset(200005);
 void initSet(int n) {
   pset.assign(n, 0);
@@ -50,44 +30,69 @@ void unionSet(int i, int j) {
   pset[findSet(i)] = findSet(j);
 }
 
+
+
+vector <pair<int,int> > coords;
+
 int main() {
+
+int t;
+cin>>t;
+
+rep2(casee,t)
+{
+
 
   int n, e;
   cin >> n >> e;
 
   adj.assign(n, vector < ii > ());
-  vector < pair < int, ii > > EdgeList;
-  for (int i = 0; i < e; i++) {
-    int from, to, w;
-    cin >> from >> to >> w;
+  vector < pair < double, ii > > EdgeList;
+
+
+  rep(i,n)
+  {
+      int x,y;
+      cin>>x>>y;
+      coords.pb(mp(x,y));
+  }
+
+  for (int i = 0; i < n; i++) {
+    for (int j=i+1;j<n;j++)   {
+
+int     from =i;
+    int to =j;
+
+ double    w= sqrt(((coords[i].first - coords[j].first) * (coords[i].first - coords[j].first)) + ((coords[i].second - coords[j].second) * (coords[i].second - coords[j].second)));
+
     EdgeList.pb(mp(w, ii(from, to)));
-    adj[from].pb(mp(to, w));
-    adj[to].pb(mp(from, w));
+
+    }
   }
 
   sort(EdgeList.begin(), EdgeList.end());
   int mst_cost = 0;
   initSet(n);
-  for (int i = 0; i < e; i++) {
+
+
+
+
+  for (int i = 0; i < n; i++) {
     pair < int, ii > front = EdgeList[i];
+
+
+
     if (!isSameSet(front.second.first, front.second.second)) {
       mst_cost += front.first;
       unionSet(front.second.first, front.second.second);
+
     }
 
   }
 
-  cout << mst_cost << endl;
-  
-  
-  
-  //minimax
-  int from,to; 
-  cin >>from>>to;
-  visited = vi(n+1);
-  maxx=0;
-  dfs(from,to);
-  cout<<maxx;
+  cout << "MST : " <<mst_cost << endl;
 
+
+}
   return 0;
 }

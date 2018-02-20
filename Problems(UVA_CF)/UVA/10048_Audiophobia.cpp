@@ -15,8 +15,7 @@ typedef pair < int, int > ii;
 
 vector < vector < ii > > adj;
 
-
-int maxx;			//minimax
+int maxx;
 vi visited;
 bool dfs(int u, int to) {
     if(u==to)
@@ -52,42 +51,51 @@ void unionSet(int i, int j) {
 
 int main() {
 
-  int n, e;
-  cin >> n >> e;
-
-  adj.assign(n, vector < ii > ());
+  int n, e,q;
+  int casee=0;
+  while(cin>>n>>e>>q)
+{
+if(n==0 && e==0 && q==0)
+    break;
+if(casee != 0 )
+    nl;
+  adj.assign(n+1, vector < ii > ());
   vector < pair < int, ii > > EdgeList;
   for (int i = 0; i < e; i++) {
     int from, to, w;
     cin >> from >> to >> w;
     EdgeList.pb(mp(w, ii(from, to)));
-    adj[from].pb(mp(to, w));
-    adj[to].pb(mp(from, w));
+
   }
 
   sort(EdgeList.begin(), EdgeList.end());
-  int mst_cost = 0;
-  initSet(n);
+
+  initSet(n+1);
   for (int i = 0; i < e; i++) {
     pair < int, ii > front = EdgeList[i];
     if (!isSameSet(front.second.first, front.second.second)) {
-      mst_cost += front.first;
+
+
+
+      adj[front.second.first].pb(mp(front.second.second, front.first));
+      adj[front.second.second].pb(mp(front.second.first, front.first));
+
       unionSet(front.second.first, front.second.second);
     }
-
   }
 
-  cout << mst_cost << endl;
-  
-  
-  
-  //minimax
-  int from,to; 
-  cin >>from>>to;
-  visited = vi(n+1);
-  maxx=0;
-  dfs(from,to);
-  cout<<maxx;
+cout<<"Case #"<<++casee<<endl;
+rep(i,q)
+{
+    visited = vi(n+1);
+    maxx=0;
+    int from,to;
+    cin>>from>>to;
+    dfs(from,to);
+    maxx==0 ? cout<<"no path"<<endl: cout<<maxx<<endl;
+}
+
+}
 
   return 0;
 }
