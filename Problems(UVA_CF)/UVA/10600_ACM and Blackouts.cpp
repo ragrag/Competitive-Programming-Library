@@ -13,26 +13,7 @@ typedef long long ll;
 typedef vector < int > vi;
 typedef pair < int, int > ii;
 
-vector < vector < ii > > adj;
 
-
-int maxx;			//minimax
-vi visited;
-bool dfs(int u, int to) {
-    if(u==to)
-        return true;
-
-	visited[u] = 1;
-	bool found = false;
-	for (auto v: adj[u]) {
-		if (visited[v.first] == 0 && dfs(v.first,to))
-    {
-                 maxx = max(maxx,v.second);
-                 return true;
-	}
-}
-return false;
-}
 
 
 vi pset(200005);
@@ -51,36 +32,36 @@ void unionSet(int i, int j) {
 }
 
 int main() {
+int t;
+cin>>t;
+while(t--)
+
+{
+
 
   int n, e;
   cin >> n >> e;
-
-  adj.assign(n, vector < ii > ());
+  vector < pair < pair<int,int> , int > > taken;
   vector < pair < int, ii > > EdgeList;
   for (int i = 0; i < e; i++) {
     int from, to, w;
     cin >> from >> to >> w;
     EdgeList.pb(mp(w, ii(from, to)));
-    adj[from].pb(mp(to, w));
-    adj[to].pb(mp(from, w));
   }
 
   sort(EdgeList.begin(), EdgeList.end());
   int mst_cost = 0;
-  initSet(n);
+  initSet(n+1);
   for (int i = 0; i < e; i++) {
     pair < int, ii > front = EdgeList[i];
     if (!isSameSet(front.second.first, front.second.second)) {
       mst_cost += front.first;
+      taken.pb( mp(  mp(front.second.first,front.second.second) , front.first ) );
       unionSet(front.second.first, front.second.second);
     }
 
   }
 
-  cout << mst_cost << endl;
-  
-  //Second Best MST
- vector < pair < pair<int,int> , int > > taken;  //Push taken edges from the first MST here
 int minmst = INF;
   for (int i = 0; i < taken.size(); i++) {
         initSet(n+1);
@@ -103,16 +84,7 @@ int minmst = INF;
             minmst = min(minmst,tempst);
   }
 
-  cout<<minmset<<endl;
-  
-  
-  //minimax
-  int from,to; 
-  cin >>from>>to;
-  visited = vi(n+1);
-  maxx=0;
-  dfs(from,to);
-  cout<<maxx;
-
+cout<<mst_cost<<" "<<minmst<<endl;
+}
   return 0;
 }
