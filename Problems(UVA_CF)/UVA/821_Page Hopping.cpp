@@ -53,7 +53,7 @@ ar[to] = 1;
 }
 cin>>from>>to;
 
-	}
+}
 
 	for (int k = 0; k <= 26; k++) //k->i->j
 	 for (int i = 0; i <= 26; i++)
