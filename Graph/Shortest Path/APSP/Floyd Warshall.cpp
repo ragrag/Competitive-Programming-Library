@@ -44,6 +44,15 @@ for (int i = 0; i < n; i++) {
 	    //adj[to][from] = w;
 	}
 
+//FLOYD	
+	for (int k = 0; k <= 26; k++) //k->i->j
+	 for (int i = 0; i <= 26; i++)
+	  for (int j = 0; j <= 26; j++)
+	      adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+  
+	       
+
+	//For Path
 	for (int k = 0; k < n; k++) //k->i->j
 	 for (int i = 0; i < n; i++)
 	  for (int j = 0; j < n; j++)

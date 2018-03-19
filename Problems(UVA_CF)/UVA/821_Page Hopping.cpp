@@ -14,24 +14,6 @@ typedef vector <int> vi;
 typedef pair<int,int> ii;
 
 int adj[400][400];
-int p[400][400];
-
-void printPath(int i, int j) {
-if (i != j) printPath(i, p[i][j]);
-cout<<j<<" ";
-}
-
-int fact(int n)
-{
-    if (n <= 1)
-        return 1;
-    return n*fact(n-1);
-}
-
-int nPr(int n, int r)
-{
-    return fact(n)/fact(n-r);
-}
 
 int main()
 {
@@ -50,7 +32,6 @@ for (int i = 1; i <=100; i++) {
     for (int j = 1; j <= 100; j++)
 	{
       adj[i][j] = INF;
-	  p[i][j] =i;
 	}
     adj[i][i] = 0;
   }
@@ -74,14 +55,10 @@ cin>>from>>to;
 
 	}
 
-	for (int k = 1; k <= 100; k++) //k->i->j
-	 for (int i = 1; i <= 100; i++)
-	  for (int j = 1; j <=100; j++)
-	    if (adj[i][k] + adj[k][j] < adj[i][j]) {
-	     adj[i][j] = adj[i][k] + adj[k][j];
-	     p[i][j] = p[k][j];
-       }
-
+	for (int k = 0; k <= 26; k++) //k->i->j
+	 for (int i = 0; i <= 26; i++)
+	  for (int j = 0; j <= 26; j++)
+	      adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
 
 
 
