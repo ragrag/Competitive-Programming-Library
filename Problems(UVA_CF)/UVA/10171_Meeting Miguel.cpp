@@ -21,7 +21,7 @@ int adj2[400][400];
 
 int main()
 {
-
+//freopen("out.txt","w",stdout);
   while(true)
  {
 
@@ -109,14 +109,17 @@ for (int i=0;i<=26;i++)
 
         if(temp < minpath )
         {
+           pos.clear();
             minpath = temp;
             pos.pb(i);
 
         }
+
         else if (temp == minpath)
             pos.pb(i);
 
 }
+sort(pos.begin(),pos.end());
 if (pos.size()> 0 )
 {
 
@@ -127,7 +130,7 @@ for(int i=0;i<pos.size();i++)
     if(i==0)
         cout<<(char) (pos[i] + 'A');
     else cout<<" " <<(char) (pos [i] + 'A');
-    
+
 }
 
 nl;
