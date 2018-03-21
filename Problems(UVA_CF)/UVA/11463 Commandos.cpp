@@ -14,16 +14,18 @@ typedef vector <int> vi;
 typedef pair<int,int> ii;
 
 int adj[400][400];
-int p[400][400];
 
-void printPath(int i, int j) {
-if (i != j) printPath(i, p[i][j]);
-cout<<j<<" ";
-}
+
 
 
 int main()
 {
+
+int t;
+cin>>t;
+for(int casee=1;casee<=t;casee++)
+{
+
 int n,e;
 cin>>n>>e;
 
@@ -31,45 +33,43 @@ for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++)
 	{
       adj[i][j] = INF;
-	  p[i][j] =i;
 	}
     adj[i][i] = 0;
   }
 
     for (int i = 0;i < e;i++)
 	{
-		int from, to,w;
-		cin >> from >> to>>w;
-	    adj[from][to] = w;
-	    //adj[to][from] = w;
+		int from, to;
+		cin >> from >> to;
+	    adj[from][to] = 1;
+	    adj[to][from] = 1;
 	}
-//FLOYD k>i>j
     for (int k = 0; k < n; k++)
         for (int i = 0; i < n; i++)
-            for (int j = 0; j < n   ; j++)
+            for (int j = 0; j < n ; j++)
                 adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
-	       
-//Connectivity check
-for (int k = 0; k < V; k++)
-	for (int i = 0; i < V; i++)
-		for (int j = 0; j < V; j++)
-			AdjMat[i][j] |= (AdjMat[i][k] & AdjMat[k][j]);
-		   
-		   
-	//For Path
-	for (int k = 0; k < n; k++) //k->i->j
-	 for (int i = 0; i < n; i++)
-	  for (int j = 0; j < n; j++)
-	    if (adj[i][k] + adj[k][j] < adj[i][j]) {
-	     adj[i][j] = adj[i][k] + adj[k][j];
-	     p[i][j] = p[k][j];
-       }
 
-		int source,dest;
-        cin >> source >> dest;
-        cout << adj[source][dest] << endl;
-        printPath(source , dest);
 
+int maxx1=-99;
+
+int start,endd;
+cin>>start>>endd;
+
+for(int i=0;i<n;i++)
+{
+
+
+if((adj[start][i] + adj[i][endd] )> maxx1)
+    {
+    maxx1 = adj[start][i] + adj[i][endd];
+    }
+
+
+
+}
+
+cout<<"Case "<<casee<<": " <<maxx1<<endl;
+}
         return 0;
     }
 
