@@ -51,7 +51,13 @@ for (int i = 0; i < n; i++) {
 	      adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
   
 	       
-
+//Connectivity check
+for (int k = 0; k < V; k++)
+	for (int i = 0; i < V; i++)
+		for (int j = 0; j < V; j++)
+			AdjMat[i][j] |= (AdjMat[i][k] & AdjMat[k][j]);
+		   
+		   
 	//For Path
 	for (int k = 0; k < n; k++) //k->i->j
 	 for (int i = 0; i < n; i++)
