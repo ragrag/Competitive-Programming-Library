@@ -30,8 +30,7 @@ while (!q.empty()) {
 	int u = q.front();
 	q.pop();
 
-	for (int j = 0; j < (int)adj[u].size(); j++){
-		int v = adj[u][j];
+	for (auto v : adj[u]){
 	if (dist[v] == INF){
 		dist[v] = dist[u] + 1;
 		q.push(v);
@@ -55,8 +54,7 @@ while (!q.empty()) {
 	int u = q.front();
 	q.pop();
 
-	for (int j = 0; j < (int)adj[u].size(); j++){
-		int v = adj[u][j];
+	for (auto v : adj[u]){
 	if (dist[v] == INF){
 		dist[v] = 1- dist[u] ;
 		q.push(v);
