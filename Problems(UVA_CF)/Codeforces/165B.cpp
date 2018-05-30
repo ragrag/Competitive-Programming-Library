@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define INF 1000000000
 #define fast ios_base::sync_with_stdio(false)
-
 using namespace std;
 typedef long long ll;
 typedef vector <int> vi;
@@ -31,13 +30,7 @@ while(l<=r)
         ans=mid;
         r=mid-1;
     }
-
 }
-
 cout<<ans<<endl;
-
-
-
-
 	return 0;
 }
