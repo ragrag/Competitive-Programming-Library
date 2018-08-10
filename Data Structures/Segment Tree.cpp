@@ -1,5 +1,5 @@
 
-class SegmentTree {         // the segment tree is stored like a heap array
+class SegmentTree {        
 private: vector <int> st, data;            
   int n;
 
@@ -41,9 +41,9 @@ int query (int v, int start, int end, int l, int r) {
 
 public:
   SegmentTree(const vector <int> &_data) {
-    data = _data; n = (int)data.size();              // copy content for local usage
-    st.assign(4 * n, 0);            // create large enough vector of zeroes
-    build(1, 0, n - 1);                                  // recursive build
+    data = _data; n = (int)data.size();              
+    st.assign(4 * n, 0);            
+    build(1, 0, n - 1);                               
   }
 
   int query(int i, int j) { return query(1, 0, n - 1, i, j); }   // overloading

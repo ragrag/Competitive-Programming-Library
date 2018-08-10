@@ -1,6 +1,6 @@
 class UnionFind {                                              // OOP style
 private:
-  vi p, rank, setSize;                       // remember: vi is vector<int>
+  vi p, rank, setSize;                      
   int numSets;
 public:
   UnionFind(int N) {
@@ -11,7 +11,7 @@ public:
   void unionSet(int i, int j) { 
     if (!isSameSet(i, j)) { numSets--; 
     int x = findSet(i), y = findSet(j);
-    // rank is used to keep the tree short
+
     if (rank[x] > rank[y]) { p[y] = x; setSize[x] += setSize[y]; }
     else                   { p[x] = y; setSize[y] += setSize[x];
                              if (rank[x] == rank[y]) rank[y]++; } } }
