@@ -15,80 +15,92 @@ const int MAX_CHAR = 26;
 typedef long long ll;
 typedef vector <int> vi;
 typedef pair<int,int> ii;
-
 typedef pair<int,ii> iii;
+
+const bool white = 0;
+const bool black = 1;
+vector <bool> curColor;
+vector <int> curBlack;
+vector <int> bestBlack;
 vector <vi> adj;
-vi visited;
-vi vis3;
- int maxx=0;
-void dfs(int u,int color,vi vis,int black)
+int n;
+
+bool valid(int u)
 {
-    vis[u] = color;
-    black+= color==1? 1:0;
-    for(auto v:adj[u])
+    for (auto v :adj[u])
     {
-        if(vis[v]==-1)
-        {
-            if(u==1)
-            {
-                    vis[u]=0;
-                    dfs(v,1,vis,black-1);
-                    vis[u]=1;
-                    dfs(v,0,vis,black);
-            }
-            else {
-            if(vis[u]==0){
-                dfs(v,0,vis,black);
-                dfs(v,1,vis,black);
-            }
-            else {
-                dfs(v,0,vis,black);
-            }
-        }
-        }
+        if(curColor[v] == black)
+            return false;
     }
-   if(black>maxx)
-   {
-       maxx= black;
-       vis3 = vis;
-   }
+    return true;
+}
+void backtrack (int u)
+{
+
+    if(u==n+1)
+    {
+        if(curBlack.size()>bestBlack.size())
+        {
+            bestBlack = curBlack;
+        }
+        return;
+    }
+
+    if(  bestBlack.size() >= ((n-u)+curBlack.size())+1  )
+        return;
+
+    if(valid(u))
+    {
+        curColor[u] = black;
+        curBlack.pb(u);
+        backtrack(u+1);
+        curColor[u] = white;
+        curBlack.pop_back();
+    }
+
+
+  backtrack(u+1);
 
 }
 
+
 int main() {
     fast;
+    //freopen ("out.h","w",stdout);
 int t;
 cin>>t;
 
 while(t--)
 {
-    int n,e;
+    int e;
     cin>>n>>e;
+    adj = vector <vi>(n+1);
+    curColor = vector<bool>(n+1);
+    adj.clear();
+    curColor.clear();
+    curBlack.clear();
+    bestBlack.clear();
 
-    adj = vector<vi>(n+1);
-    visited.assign(n+1,-1);
-    vis3.clear();
-    rep(i,e){
-    int from,to;
-    cin>>from>>to;
-    adj[from].pb(to);
-    adj[to].pb(from);
-
-    }
-
-
-    dfs(1,1,visited,0);
-    cout<<maxx<<endl;
-    rep2(i,n)
+    rep(i,e)
     {
-        if(vis3[i]==1)
-            cout<<i<<" ";
+        int from,to;
+        cin>>from>>to;
+        adj[from].pb(to);
+        adj[to].pb(from);
     }
-    cout<<endl;
 
+    backtrack(1);
+    cout<<bestBlack.size()<<endl;
 
+    for(int i=0;i<bestBlack.size();i++)
+    {
+        cout<<bestBlack[i];
+        i<bestBlack.size()-1? cout<<" ":cout<<endl;
+    }
 
 
 }
+
+
     return 0;
 }
