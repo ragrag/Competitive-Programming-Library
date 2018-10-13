@@ -53,7 +53,7 @@ p = vector<int>(n+1);
 		int from, to,w;
 		cin >> from >> to>>w;
 	    adj[from].push_back(mp(to,w));
-	  //  adj[to].push_back(mp(from,w));
+	  //adj[to].push_back(mp(from,w));
 	}
 
 int source,dest;
