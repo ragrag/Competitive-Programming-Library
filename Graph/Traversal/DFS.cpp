@@ -80,8 +80,8 @@ forwardedge=0;
 	{
 		int from,to;
 		cin >> from >>to;
-		adj[to].push_back(to);
-        adj[to].push_back(from);
+		adj[from].push_back(to);
+        	adj[to].push_back(from);
 		}
 	}
 
